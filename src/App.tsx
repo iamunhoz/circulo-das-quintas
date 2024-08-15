@@ -1,33 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Avatar, Box, Button } from "@mui/material"
+import CircleOfFithBackground from "./assets/Circle-of-Fifths-Big-600x600.jpg"
+import UndoIcon from "@mui/icons-material/Undo"
+import RedoIcon from "@mui/icons-material/Redo"
+import { useState } from "react"
+
+const desvioInicialDoCirculoDeQuintas = -15
+const rotacaoPorNota = 30
+
+function calcularRotacaoNota(qualNota: number) {
+  return desvioInicialDoCirculoDeQuintas + rotacaoPorNota * qualNota
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [nota, setarNota] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Avatar
+        src={CircleOfFithBackground}
+        sx={{
+          width: "600px",
+          height: "600px",
+          margin: 0,
+          padding: 0,
+          transform: `rotate(${calcularRotacaoNota(nota)}deg)`,
+
+          "& *": {
+            margin: 0,
+            padding: 0,
+          },
+        }}
+      />
+      <Box
+        sx={{
+          width: "601px",
+          height: "601px",
+          boxSizing: "border-box",
+          borderRadius: "50%",
+          borderTop: "300px solid #101010",
+          borderLeft: "300px solid #101010",
+          position: "absolute",
+          top: 8,
+          left: 8,
+          transform: "rotate(-135deg)",
+        }}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "30px",
+          position: "absolute",
+          width: 75,
+          top: 350,
+          left: 300,
+          transform: "translate(-30px)",
+        }}
+      >
+        <Button
+          onClick={() => {
+            setarNota(nota - 1)
+          }}
+        >
+          <RedoIcon
+            sx={{
+              transform: "scale(4)",
+            }}
+          />
+        </Button>
+        <Button
+          onClick={() => {
+            setarNota(nota + 1)
+          }}
+        >
+          <UndoIcon
+            sx={{
+              transform: "scale(4) scaleY(-1)",
+            }}
+          />
+        </Button>
+      </Box>
     </>
   )
 }
